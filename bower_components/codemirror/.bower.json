@@ -18,14 +18,14 @@
     "mode/*/*.html"
   ],
   "homepage": "https://github.com/components/codemirror",
-  "version": "5.30.0",
-  "_release": "5.30.0",
+  "version": "5.33.0",
+  "_release": "5.33.0",
   "_resolution": {
     "type": "version",
-    "tag": "5.30.0",
-    "commit": "13706af84d4be6a880af86faaf42c010f4d0861f"
+    "tag": "5.33.0",
+    "commit": "28adb4e42d7ce29d254732cb71db46bf35314fb6"
   },
   "_source": "https://github.com/components/codemirror.git",
-  "_target": "^5.25.0",
+  "_target": "^5.32.0",
   "_originalSource": "codemirror"
 }

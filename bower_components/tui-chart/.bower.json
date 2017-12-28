@@ -25,14 +25,14 @@
     "codemirror": "5.24.0"
   },
   "homepage": "https://github.com/nhnent/tui.chart",
-  "version": "2.10.0",
-  "_release": "2.10.0",
+  "version": "2.12.0",
+  "_release": "2.12.0",
   "_resolution": {
     "type": "version",
-    "tag": "v2.10.0",
-    "commit": "ebc59b8540460b6a5dea97ab076a233a0823d6b4"
+    "tag": "v2.12.0",
+    "commit": "17be0aa34cc6bb049a71850139133a76db88cb8b"
   },
   "_source": "https://github.com/nhnent/tui.chart.git",
-  "_target": "^2.9.4",
+  "_target": "v2.12.0",
   "_originalSource": "tui-chart"
 }

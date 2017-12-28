@@ -5,30 +5,31 @@
     <title>TUI Editor by FE Development Lab / NHN Entertainment</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="stylesheet" href="bower_components/tui-component-colorpicker/dist/colorpicker.min.css">
+    <link rel="stylesheet" href="bower_components/tui-color-picker/dist/tui-color-picker.css">
     <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css">
     <link rel="stylesheet" href="bower_components/tui-chart/dist/chart.min.css">
-    <link rel="stylesheet" href="bower_components/tui-editor/dist/tui-editor.css">
-    <link rel="stylesheet" href="bower_components/tui-editor/dist/tui-editor-contents.css">
-    <script src="bower_components/markdown-it/dist/markdown-it.js"></script>
-    <script src="bower_components/toMark/dist/toMark.js"></script>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="bower_components/tui-editor/dist/tui-editor.min.css">
+    <link rel="stylesheet" href="bower_components/tui-editor/dist/tui-editor-contents.min.css">
+    <script src="bower_components/markdown-it/dist/markdown-it.min.js"></script>
+    <script src="bower_components/toMark/dist/toMark.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/tui-code-snippet/dist/tui-code-snippet.min.js"></script>
-    <script src="bower_components/tui-component-colorpicker/dist/colorpicker.min.js"></script>
+    <script src="bower_components/tui-color-picker/dist/tui-color-picker.min.js"></script>
     <script src="bower_components/codemirror/lib/codemirror.js"></script>
-    <script src="bower_components/highlightjs/highlight.pack.js"></script>
+    <script src="bower_components/highlightjs/highlight.pack.min.js"></script>
     <script src="bower_components/squire-rte/build/squire.js"></script>
     <script src="bower_components/plantuml-encoder/dist/plantuml-encoder.min.js"></script>
     <script src="bower_components/raphael/raphael.min.js"></script>
     <script src="bower_components/tui-chart/dist/chart.min.js"></script>
-    <script src="bower_components/tui-editor/dist/tui-editor.min.js"></script>
+    <script src="bower_components/tui-editor/dist/tui-editor-Editor-all.min.js"></script>
     <style>
-     #editSection, #editSection * {
-         font-family: inherit;
+     #editSection, #editSection *,
+     .tui-editor-contents *,
+     .CodeMirror pre {
+         font-family: Roboto, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", sans-serif;
      }
 
      #editSection button,
@@ -78,6 +79,10 @@
          font-size: 12px
      }
 
+     .show-toolbar .tui-editor-defaultUI {
+         border: 1px solid #e5e5e5
+     }
+
      .tui-editor-defaultUI {
          margin: 15px 0;
      }
@@ -89,21 +94,27 @@
 
      .te-md-container .CodeMirror,
      .tui-editor-contents {
-         font-size: 16px;
+         font-size: 20px;
      }
 
      .show-only-text:not(.show-toolbar) .te-toolbar-section,
      .show-only-text:not(.show-toolbar) .te-mode-switch-section,
      .show-only-text:not(.show-toolbar) .te-markdown-tab-section {
-         display: none !important;
+         visibility: hidden !important;
+         opacity: 0;
+         transition: visibility 0s linear 300ms, opacity 300ms;
      }
 
-     .show-only-text:not(.show-toolbar) .tui-editor {
+     .show-only-text.show-toolbar .te-toolbar-section,
+     .show-only-text.show-toolbar .te-mode-switch-section,
+     .show-only-text.show-toolbar .te-markdown-tab-section {
+         opacity: 1;
+         transition: visibility 0s linear 0ms, opacity 300ms;
+     }
+
+     .show-only-text:not(.show-toolbar) .tui-editor-defaultUI {
          border: 0;
-     }
-
-     .show-only-text:not(.show-toolbar) .te-editor {
-         padding: 5px;
+         padding: 1px;
      }
 
      .tui-editor-contents,
@@ -119,12 +130,20 @@
          overflow-x: hidden;
          overflow-y: auto;
      }
+
+     b, strong {
+         font-weight: 400;
+     }
+
+     .site-footer {
+         text-align:center;
+     }
     </style>
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">tui.editor</h1>
-      <h2 class="project-tagline">ToastUI Editor</h2>
+      <h1 class="project-name">ToastUI Editor</h1>
+      <h2 class="project-tagline">GFM Markdown Wysiwyg Editor - Productive and Extensible</h2>
       <a href="https://github.com/nhnent/tui.editor" class="btn">View on GitHub</a>
       <a href="api/latest/" class="btn" target="_blank" style="margin-left:5px">API</a>
     </section>
@@ -136,7 +155,12 @@
 
       <div id="editor-spec" class="show-only-text"></div>
 
+      <div id="editor-extension-description" class="show-only-text"></div>
+
+      <div id="editor-extension-chart" class="show-only-text"></div>
+
       <footer class="site-footer">
+          <a href="https://github.com/nhnent/tui.editor">tui-editor</a> is maintained by 🍞 FE Development Lab / 🏢 <a href="https://github.com/nhnent/">NHN Entertainment</a>.
       </footer>
     </section>
     <script>
@@ -145,8 +169,8 @@
           height: 'auto',
           initialEditType: 'wysiwyg',
           initialValue: '![ToastEditorLogo](https://cloud.githubusercontent.com/assets/389021/16107646/9729e556-33d8-11e6-933f-5b09fa3a53bb.png)\n\n' +
-          'The ToastUI Editor is a two-way editor based on Markdown.\n' +
-          'You can choose and use WYSIWYG and Markdown as needed. And if you are in need, you can switch the editing mode (WYSIWYG ↔ Markdown) while you are writing it without any spoiling.',
+          '**ToastUI Editor** provides *Markdown* and *Wysiwyg* modes.\n' +
+          'Someone may like the productivity of *Markdown*, but the other can be looking for a way to make it easier to edit. The **ToastUI Editor** can be the coordinator of both. It offers **Markdown mode** and **Wysiwyg mode**, those can be switched at any time during writing content. Work together conveniently in one document.',
           events: {
               focus: function() {
                   $('#editor-intro').addClass('show-toolbar');
@@ -160,13 +184,16 @@
       $('#editor-spec').tuiEditor({
           height: 'auto',
           initialEditType: 'wysiwyg',
-          initialValue: '# <span style="color:#159957">Features</span>\n' +
-          '* Input &amp; output with GFM : All documents are exported by "Github Flavored Markdown" format even if it has written on WYSIWYG mode.\n' +
-          '* Quick & Easy mode switching : Switch editing mode WYSIWYG and Markdown anytime you need.\n' +
-          '* Live preview : Always display current Markdown document\'s HTML preview.\n' +
-          '* Extensible : You can extend features by integrated API & Extension.\n' +
-          '* Auto-Scroll : A scroll automatically follows cursor position during editing so that you can see a Markdown preview in real time.\n' +
-          '* Text color : You can set the text color using inline html tag.',
+          initialValue: '# <span style="color:#4b94e5">Features</span>\n' +
+          '* **![image](https://user-images.githubusercontent.com/1215767/34385443-38d6ba28-eb66-11e7-958b-67e71552fa68.png) Markdown mode**\n' +
+          '    * **Live Preview**: Edit Markdown while keeping eye on the rendered HTML. Your edits will be applied immediately\n' +
+          '    * **Scroll sync**: Synchronous scrolling between Markdown and Preview. You don\'t need to scroll those separately\n' +
+          '    * **Auto indent list**: The cursor will always be where you want to be\n' +
+          '    * **Syntax highlight**: You can check broken Markdown syntax immediately\n' +
+          '* **🚀 Wisywig mode**\n' +
+          '    * **Copy and paste**: Paste anything from browser, screenshot, excel, powerpoint etc\n' +
+          '    * **Codeblock editor**: Highlight 170+ languages with full width code editor\n' +
+          '    * **Table**: Hate the Markdown table? You can do everything with a mouse',
           events: {
               focus: function() {
                   $('#editor-spec').addClass('show-toolbar');
@@ -177,27 +204,60 @@
           }
       });
 
+      $('#editor-extension-chart').tuiEditor({
+          height: 'auto',
+          initialEditType: 'markdown',
+          previewStyle: 'vertical',
+          initialValue: '```chart\n' +
+          ' Budget Income "Expenses 1" "Expenses 2"\n' +
+          'June 5000 8000 4000 4000\n' +
+          'July 3000 1000 4000 3000\n' +
+          'Aug 5000 7000 6000 2000\n' +
+          'Sep 7000 2000 3000 4000\n' +
+          '\n' +
+          'type: column\n' +
+          'title: Monthly Revenue\n' +
+          'y.title: Amount\n' +
+          'x.title: Month\n' +
+          'legend.visible: false\n' +
+          '```\n',
+          events: {
+              focus: function() {
+                  $('#editor-extension-chart').addClass('show-toolbar');
+              },
+              load: function() {
+                  $('#editor-extension-chart').removeClass('show-toolbar');
+              }
+          }
+      });
+
+      $('#editor-extension-description').tuiEditor({
+          height: 'auto',
+          initialEditType: 'wysiwyg',
+          initialValue: '# <span style="color:#4b94e5">Extensions</span>\n' +
+          '*CommonMark* and *GFM* are great, but we often face requirements beyond the specifications. The **ToastUI Editor** comes with powerful **Extensions** in compliance with the *Markdown* syntax. And it also provides APIs so you can develop your own extensions.\n' +
+          'Please check *https://github.com/nhnent/tui.editor/wiki/Extensions* to learn about **Extensions**.\n',
+          events: {
+              focus: function() {
+                  $('#editor-extension-description').addClass('show-toolbar');
+              },
+              load: function() {
+                  $('#editor-extension-description').removeClass('show-toolbar');
+              }
+          }
+      });
+
       $(document).on('click', function(e) {
           if ($(e.target).parents('.show-only-text').length === 0) {
               $('.show-only-text').removeClass('show-toolbar');
           }
       });
 
-      $('footer').tuiEditor({
-          height: 'auto',
-          initialEditType: 'wysiwyg',
-          initialValue: '<span style="color:#606c71">**[tui.editor](https://github.com/nhnent/tui.editor) ' +
-          'is maintained by FE Development Lab / [NHN Entertainment](https://github.com/nhnent/).**</span> <span style="color:#819198">' +
-          'This page was generated by [GitHub Pages](https://pages.github.com/) using the ' +
-          '[Cayman theme](https://github.com/jasonlong/cayman-theme) by [Jason Long](https://twitter.com/jasonlong).</span>',
-          viewOnly: 'true'
-      });
-
       $('#editSection').tuiEditor({
           previewStyle: 'vertical',
           height: 400,
           initialEditType: 'markdown',
-          exts: ['scrollFollow', 'colorSyntax', 'tableExtension', 'plantUML', 'chart']
+          exts: ['scrollSync', 'colorSyntax', 'table', 'uml', 'chart']
       });
     </script>
   </body>

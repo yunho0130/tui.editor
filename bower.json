@@ -9,8 +9,6 @@
   "homepage": "nhnent.github.io/tui.editor",
   "private": true,
   "dependencies": {
-    "tui-editor": "https://github.com/nhnent/tui.editor.git",
-    "tui-component-colorpicker": "^1.0.2",
-    "plantuml-encoder": "^1.2.4"
+    "tui-editor": "https://github.com/nhnent/tui.editor.git#release/1.0-1"
   }
 }

@@ -21,13 +21,12 @@
     "test",
     "tests"
   ],
-  "_release": "947dadf66f",
+  "_release": "306230d0df",
   "_resolution": {
-    "type": "branch",
-    "branch": "tui-editor-release",
-    "commit": "947dadf66f348d0d2936e30e83dc43d7dd19fdbb"
+    "type": "commit",
+    "commit": "306230d0df9b38047cd06204476ddc0582569cfd"
   },
-  "_source": "https://github.com/kyuwoo-choi/Squire.git",
-  "_target": "tui-editor-release",
-  "_originalSource": "kyuwoo-choi/Squire"
+  "_source": "https://github.com/neilj/Squire.git",
+  "_target": "306230d0df9b38047cd06204476ddc0582569cfd",
+  "_originalSource": "neilj/Squire"
 }
