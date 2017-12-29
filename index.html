@@ -45,11 +45,16 @@
      #editSection h5,
      #editSection h6 {
          color: #222;
+         font-weight: 300;
      }
 
      #editSection .tui-popup-body h1 {
          font-size: 28px;
          color: black;
+     }
+
+     #editSection h1:first-of-type {
+         margin-top: 14px;
      }
 
      #editSection .tui-popup-body h2 {
@@ -97,24 +102,30 @@
          font-size: 20px;
      }
 
-     .show-only-text:not(.show-toolbar) .te-toolbar-section,
-     .show-only-text:not(.show-toolbar) .te-mode-switch-section,
-     .show-only-text:not(.show-toolbar) .te-markdown-tab-section {
+     .show-only-text .te-toolbar-section,
+     .show-only-text .te-mode-switch-section,
+     .show-only-text .te-markdown-tab-section {
          visibility: hidden !important;
          opacity: 0;
          transition: visibility 0s linear 300ms, opacity 300ms;
      }
 
-     .show-only-text.show-toolbar .te-toolbar-section,
-     .show-only-text.show-toolbar .te-mode-switch-section,
-     .show-only-text.show-toolbar .te-markdown-tab-section {
+     .show-only-text:hover .te-toolbar-section,
+     .show-only-text:hover .te-mode-switch-section,
+     .show-only-text:hover .te-markdown-tab-section {
+         visibility: visible !important;
          opacity: 1;
          transition: visibility 0s linear 0ms, opacity 300ms;
      }
 
-     .show-only-text:not(.show-toolbar) .tui-editor-defaultUI {
-         border: 0;
-         padding: 1px;
+     .show-only-text .tui-editor-defaultUI {
+         border: 1px solid rgba(255, 255, 255, 0);
+         transition: border-color 0s linear 300ms, border-color 300ms;
+     }
+
+     .show-only-text:hover .tui-editor-defaultUI {
+         border: 1px solid #e5e5e5;
+         transition: border-color 0s linear 0ms, border-color 300ms;
      }
 
      .tui-editor-contents,
@@ -131,7 +142,11 @@
          overflow-y: auto;
      }
 
-     b, strong {
+     .CodeMirror .cm-header {
+         font-weight: 300;
+     }
+
+     b, strong, .cm-strong {
          font-weight: 400;
      }
 
@@ -143,7 +158,7 @@
   <body>
     <section class="page-header">
       <h1 class="project-name">ToastUI Editor</h1>
-      <h2 class="project-tagline">GFM Markdown Wysiwyg Editor - Productive and Extensible</h2>
+      <h2 class="project-tagline">GFM Markdown WYSIWYG Editor - Productive and Extensible</h2>
       <a href="https://github.com/nhnent/tui.editor" class="btn">View on GitHub</a>
       <a href="api/latest/" class="btn" target="_blank" style="margin-left:5px">API</a>
     </section>
@@ -169,16 +184,8 @@
           height: 'auto',
           initialEditType: 'wysiwyg',
           initialValue: '![ToastEditorLogo](https://cloud.githubusercontent.com/assets/389021/16107646/9729e556-33d8-11e6-933f-5b09fa3a53bb.png)\n\n' +
-          '**ToastUI Editor** provides *Markdown* and *Wysiwyg* modes.\n' +
-          'Someone may like the productivity of *Markdown*, but the other can be looking for a way to make it easier to edit. The **ToastUI Editor** can be the coordinator of both. It offers **Markdown mode** and **Wysiwyg mode**, those can be switched at any time during writing content. Work together conveniently in one document.',
-          events: {
-              focus: function() {
-                  $('#editor-intro').addClass('show-toolbar');
-              },
-              load: function() {
-                  $('#editor-intro').removeClass('show-toolbar');
-              }
-          }
+          '**ToastUI Editor** provides **Markdown mode** and **WYSIWYG mode**.\n' +
+          'Someone may like the productivity of *Markdown*, but the other can be looking for a way to make it easier to edit. The **ToastUI Editor** can be the coordinator of both. It offers **Markdown mode** and **WYSIWYG mode**, those can be switched at any time during writing content. Work together conveniently in one document.'
       });
 
       $('#editor-spec').tuiEditor({
@@ -193,15 +200,7 @@
           '* **🚀 Wisywig mode**\n' +
           '    * **Copy and paste**: Paste anything from browser, screenshot, excel, powerpoint etc\n' +
           '    * **Codeblock editor**: Highlight 170+ languages with full width code editor\n' +
-          '    * **Table**: Hate the Markdown table? You can do everything with a mouse',
-          events: {
-              focus: function() {
-                  $('#editor-spec').addClass('show-toolbar');
-              },
-              load: function() {
-                  $('#editor-spec').removeClass('show-toolbar');
-              }
-          }
+          '    * **Table**: Hate the Markdown table? You can do everything with a mouse'
       });
 
       $('#editor-extension-chart').tuiEditor({
@@ -220,15 +219,7 @@
           'y.title: Amount\n' +
           'x.title: Month\n' +
           'legend.visible: false\n' +
-          '```\n',
-          events: {
-              focus: function() {
-                  $('#editor-extension-chart').addClass('show-toolbar');
-              },
-              load: function() {
-                  $('#editor-extension-chart').removeClass('show-toolbar');
-              }
-          }
+          '```\n'
       });
 
       $('#editor-extension-description').tuiEditor({
@@ -236,15 +227,7 @@
           initialEditType: 'wysiwyg',
           initialValue: '# <span style="color:#4b94e5">Extensions</span>\n' +
           '*CommonMark* and *GFM* are great, but we often face requirements beyond the specifications. The **ToastUI Editor** comes with powerful **Extensions** in compliance with the *Markdown* syntax. And it also provides APIs so you can develop your own extensions.\n' +
-          'Please check *https://github.com/nhnent/tui.editor/wiki/Extensions* to learn about **Extensions**.\n',
-          events: {
-              focus: function() {
-                  $('#editor-extension-description').addClass('show-toolbar');
-              },
-              load: function() {
-                  $('#editor-extension-description').removeClass('show-toolbar');
-              }
-          }
+          'Please check *https://github.com/nhnent/tui.editor/wiki/Extensions* to learn about **Extensions**.\n'
       });
 
       $(document).on('click', function(e) {
