@@ -1,14 +1,30 @@
 {
   "name": "tui-editor",
-  "description": "private",
+  "description": "GFM  Markdown Wysiwyg Editor - Productive and Extensible",
   "authors": [
     "NHN Ent. FE Development Lab <dl_javascript@nhnent.com> (https://nhnent.github.io/tui.editor/)"
   ],
+  "homepage": "https://github.com/nhnent/tui.editor",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nhnent/tui.editor.git"
+  },
   "moduleType": [
     "globals",
     "es6",
     "amd",
     "node"
+  ],
+  "keywords": [
+    "toast",
+    "ui",
+    "tui",
+    "markdown",
+    "wysiwyg",
+    "editor",
+    "preview",
+    "gfm",
+    "jquery-plugin"
   ],
   "main": "dist/tui-editor-Editor.js",
   "license": "MIT",
@@ -18,9 +34,10 @@
     "bower_components",
     "lib/",
     "test",
-    "tests"
+    "tests",
+    "api",
+    "report"
   ],
-  "keywords": [],
   "dependencies": {
     "tui-code-snippet": "^1.2.9",
     "codemirror": "^5.32.0",
@@ -30,20 +47,20 @@
     "toMark": "nhnent/toMark#0.0.19",
     "tui-color-picker": "^2.0.1",
     "squire-rte": "neilj/Squire#306230d0df9b38047cd06204476ddc0582569cfd",
-    "plantuml-encoder": "aleung/plantuml-encoder#156729063bfa62da6fa5f577627ebab57ae98c95",
-    "tui-chart": "v2.12.0"
+    "plantuml-encoder": "kyuwoo-choi/plantuml-encoder#156729063bfa62da6fa5f577627ebab57ae98c95",
+    "tui-chart": "^2.13.0"
   },
   "resolutions": {
     "tui-code-snippet": "^1.2.9"
   },
-  "homepage": "https://github.com/nhnent/tui.editor",
-  "_release": "57012cbb2d",
+  "version": "1.0.0-1",
+  "_release": "1.0.0-1",
   "_resolution": {
-    "type": "branch",
-    "branch": "release/1.0-1",
-    "commit": "57012cbb2d8529608660c8c60f64bdac1a9acaa7"
+    "type": "version",
+    "tag": "1.0.0-1",
+    "commit": "2b36c7abeb7ae025bef2b669fca23fae9df1ca3d"
   },
   "_source": "https://github.com/nhnent/tui.editor.git",
-  "_target": "release/1.0-1",
-  "_originalSource": "https://github.com/nhnent/tui.editor.git"
+  "_target": "1.0.0-1",
+  "_originalSource": "tui-editor"
 }
