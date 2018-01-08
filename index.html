@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>TOAST UI Editor by FE Development Lab / NHN Entertainment</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- OpenGraph -->
+    <meta property="og:url" content="https://nhnent.github.io/tui.editor" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TOAST UI Editor" />
+    <meta property="og:description" content="GFM Markdown Wysiwyg Editor - Productive and Extensible" />
+    <meta property="og:image" content="https://user-images.githubusercontent.com/1215767/34353629-95b58da0-ea6c-11e7-859b-df5e990dd157.png" />
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
@@ -153,10 +159,47 @@
      .site-footer {
          text-align:center;
      }
+     .social {
+         position: absolute;
+         right: 10px;
+         top: 10px;
+     }
+     .social > * {
+         margin-left: 10px;
+     }
+     .social .fb-share-button {
+         top: -5px;
+     }
+     .social .github-button {
+         color: transparent;
+     }
     </style>
   </head>
   <body>
     <section class="page-header">
+      <div class="social">
+        <div class="fb-share-button"
+          data-href="https://nhnent.github.io/tui.editor"
+          data-layout="button"
+          data-size="small"
+          data-mobile-iframe="false">
+            <a class="fb-xfbml-parse-ignore"
+              target="_blank"
+              href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fnhnent.github.io%2Ftui.editor&amp;src=sdkpreparse">
+            </a>
+        </div>
+        <a class="twitter-share-button"
+          href="https://twitter.com/intent/tweet?text=TOAST%20UI%20Editor%20-%20#javascript%20#WYSIWYG%20#Markdown%20#Editor"
+          data-size="small">
+        </a>
+        <a class="github-button"
+          href="https://github.com/nhnent/tui.editor"
+          data-icon="octicon-star"
+          data-show-count="true"
+          aria-label="Star nhnent/tui.editor on GitHub">
+            Star
+        </a>
+      </div>
       <h1 class="project-name">TOAST UI Editor</h1>
       <h2 class="project-tagline">GFM Markdown WYSIWYG Editor - Productive and Extensible</h2>
       <a href="https://github.com/nhnent/tui.editor" class="btn">View on GitHub</a>
@@ -243,5 +286,33 @@
           exts: ['scrollSync', 'colorSyntax', 'table', 'uml', 'chart']
       });
     </script>
+    <!-- Facebook -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <!-- Twitter -->
+    <script>window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
+
+        return t;
+    }(document, "script", "twitter-wjs"));</script>
+    <!-- Github -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
