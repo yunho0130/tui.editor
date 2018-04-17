@@ -1,16 +1,16 @@
 /*!
  * tui-editor
- * @version 1.0.0
+ * @version 1.1.0
  * @author NHN Ent. FE Development Lab <dl_javascript@nhnent.com> (https://nhnent.github.io/tui.editor/)
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("jquery"), require("tui-code-snippet"), require("toMark"), require("tui-chart"), require("markdown-it"), require("highlight.js"), require("tui-color-picker"), require("plantuml-encoder"));
+		module.exports = factory(require("jquery"), require("tui-code-snippet"), require("to-mark"), require("tui-chart"), require("markdown-it"), require("highlight.js"), require("tui-color-picker"), require("plantuml-encoder"));
 	else if(typeof define === 'function' && define.amd)
-		define(["jquery", "tui-code-snippet", "toMark", "tui-chart", "markdown-it", "highlight.js", "tui-color-picker", "plantuml-encoder"], factory);
+		define(["jquery", "tui-code-snippet", "to-mark", "tui-chart", "markdown-it", "highlight.js", "tui-color-picker", "plantuml-encoder"], factory);
 	else if(typeof exports === 'object')
-		exports["Editor"] = factory(require("jquery"), require("tui-code-snippet"), require("toMark"), require("tui-chart"), require("markdown-it"), require("highlight.js"), require("tui-color-picker"), require("plantuml-encoder"));
+		exports["Editor"] = factory(require("jquery"), require("tui-code-snippet"), require("to-mark"), require("tui-chart"), require("markdown-it"), require("highlight.js"), require("tui-color-picker"), require("plantuml-encoder"));
 	else
 		root["tui"] = root["tui"] || {}, root["tui"]["Editor"] = factory(root["$"], (root["tui"] && root["tui"]["util"]), root["toMark"], (root["tui"] && root["tui"]["chart"]), root["markdownit"], root["hljs"], (root["tui"] && root["tui"]["colorPicker"]), root["plantumlEncoder"]);
 })(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_17__, __WEBPACK_EXTERNAL_MODULE_29__, __WEBPACK_EXTERNAL_MODULE_38__, __WEBPACK_EXTERNAL_MODULE_47__, __WEBPACK_EXTERNAL_MODULE_79__, __WEBPACK_EXTERNAL_MODULE_81__) {
@@ -2585,12 +2585,18 @@ var ToastUIEditorViewer = function () {
 
     _classCallCheck(this, ToastUIEditorViewer);
 
-    this.options = options;
+    this.options = _jquery2.default.extend({
+      useDefaultHTMLSanitizer: true
+    }, options);
 
     this.eventManager = new _eventManager2.default();
     this.commandManager = new _commandManager2.default(this);
     this.convertor = new _convertor2.default(this.eventManager);
     this.toMarkOptions = null;
+
+    if (this.options.useDefaultHTMLSanitizer) {
+      this.convertor.initHtmlSanitizer();
+    }
 
     if (this.options.hooks) {
       _tuiCodeSnippet2.default.forEach(this.options.hooks, function (fn, key) {
@@ -7534,7 +7540,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var eventList = ['previewBeforeHook', 'previewRenderAfter', 'previewNeedsRefresh', 'addImageBlobHook', 'setMarkdownAfter', 'contentChangedFromWysiwyg', 'changeFromWysiwyg', 'contentChangedFromMarkdown', 'changeFromMarkdown', 'change', 'changeModeToWysiwyg', 'changeModeToMarkdown', 'changeModeBefore', 'changeMode', 'changePreviewStyle', 'openPopupAddLink', 'openPopupAddImage', 'openPopupAddTable', 'openPopupTableUtils', 'openHeadingSelect', 'openPopupCodeBlockLanguages', 'openPopupCodeBlockEditor', 'closePopupCodeBlockLanguages', 'closePopupCodeBlockEditor', 'closeAllPopup', 'command', 'addCommandBefore', 'htmlUpdate', 'markdownUpdate', 'renderedHtmlUpdated', 'removeEditor', 'convertorAfterMarkdownToHtmlConverted', 'convertorBeforeHtmlToMarkdownConverted', 'convertorAfterHtmlToMarkdownConverted', 'stateChange', 'wysiwygSetValueAfter', 'wysiwygSetValueBefore', 'wysiwygGetValueBefore', 'wysiwygProcessHTMLText', 'wysiwygRangeChangeAfter', 'wysiwygKeyEvent', 'scroll', 'click', 'mousedown', 'mouseover', 'mouseout', 'mouseup', 'contextmenu', 'keydown', 'keyup', 'keyMap', 'load', 'focus', 'blur', 'paste', 'pasteBefore', 'willPaste', 'copy', 'copyBefore', 'copyAfter', 'cut', 'cutAfter', 'drop', 'show', 'hide'];
+var eventList = ['previewBeforeHook', 'previewRenderAfter', 'previewNeedsRefresh', 'addImageBlobHook', 'setMarkdownAfter', 'contentChangedFromWysiwyg', 'changeFromWysiwyg', 'contentChangedFromMarkdown', 'changeFromMarkdown', 'change', 'changeModeToWysiwyg', 'changeModeToMarkdown', 'changeModeBefore', 'changeMode', 'changePreviewStyle', 'openPopupAddLink', 'openPopupAddImage', 'openPopupAddTable', 'openPopupTableUtils', 'openHeadingSelect', 'openPopupCodeBlockLanguages', 'openPopupCodeBlockEditor', 'openDropdownToolbar', 'closePopupCodeBlockLanguages', 'closePopupCodeBlockEditor', 'closeAllPopup', 'command', 'addCommandBefore', 'htmlUpdate', 'markdownUpdate', 'renderedHtmlUpdated', 'removeEditor', 'convertorAfterMarkdownToHtmlConverted', 'convertorBeforeHtmlToMarkdownConverted', 'convertorAfterHtmlToMarkdownConverted', 'stateChange', 'wysiwygSetValueAfter', 'wysiwygSetValueBefore', 'wysiwygGetValueBefore', 'wysiwygProcessHTMLText', 'wysiwygRangeChangeAfter', 'wysiwygKeyEvent', 'scroll', 'click', 'mousedown', 'mouseover', 'mouseout', 'mouseup', 'contextmenu', 'keydown', 'keyup', 'keyMap', 'load', 'focus', 'blur', 'paste', 'pasteBefore', 'willPaste', 'copy', 'copyBefore', 'copyAfter', 'cut', 'cutAfter', 'drop', 'show', 'hide'];
 
 /**
  * Class EventManager
@@ -8835,14 +8841,21 @@ module.exports = MarkdownitTaskRenderer;
  */
 var MarkdownitCodeBlockRenderer = function MarkdownitCodeBlockRenderer(markdownit) {
     markdownit.core.ruler.after('block', 'tui-code-block', function (state) {
+        var DEFAULT_NUMBER_OF_BACKTICKS = 3;
         var tokens = state.tokens;
-        var currentToken, tokenIndex;
+        var currentToken, tokenIndex, numberOfBackticks;
 
         for (tokenIndex = 0; tokenIndex < tokens.length; tokenIndex += 1) {
             currentToken = tokens[tokenIndex];
 
-            if (isCodeFenceToken(currentToken) && currentToken.info) {
-                setTokenAttribute(currentToken, 'data-language', escape(currentToken.info.replace(' ', ''), true));
+            if (isCodeFenceToken(currentToken)) {
+                numberOfBackticks = currentToken.markup.length;
+                if (numberOfBackticks > DEFAULT_NUMBER_OF_BACKTICKS) {
+                    setTokenAttribute(currentToken, 'data-backticks', numberOfBackticks, true);
+                }
+                if (currentToken.info) {
+                    setTokenAttribute(currentToken, 'data-language', escape(currentToken.info.replace(' ', ''), true));
+                }
             }
         }
     });
@@ -11572,6 +11585,13 @@ if (i18n) {
     'Cannot paste row merged cells into the table header': 'Cannot paste row merged cells into the table header.'
   });
 
+  i18n.setLanguage(['es', 'es_ES'], {
+    'Merge cells': 'Combinar celdas',
+    'Unmerge cells': 'Separar celdas',
+    'Cannot change part of merged cell': 'No se puede cambiar parte de una celda combinada.',
+    'Cannot paste row merged cells into the table header': 'No se pueden pegar celdas combinadas en el encabezado de tabla.'
+  });
+
   i18n.setLanguage(['ja', 'ja_JP'], {
     'Merge cells': 'セルの結合',
     'Unmerge cells': 'セルの結合を解除',
@@ -11591,6 +11611,34 @@ if (i18n) {
     'Unmerge cells': '取消合并单元格',
     'Cannot change part of merged cell': '无法更改合并单元格的一部分。',
     'Cannot paste row merged cells into the table header': '无法将行合并单元格粘贴到标题中。'
+  });
+
+  i18n.setLanguage(['de', 'de_DE'], {
+    'Merge cells': 'Zellen zusammenführen',
+    'Unmerge cells': 'Zusammenführen rückgängig machen',
+    'Cannot change part of merged cell': 'Der Teil der verbundenen Zelle kann nicht geändert werden.',
+    'Cannot paste row merged cells into the table header': 'Die Zeile der verbundenen Zellen kann nicht in die Kopfzeile eingefügt werden.'
+  });
+
+  i18n.setLanguage(['ru', 'ru_RU'], {
+    'Merge cells': 'Объединить ячейки',
+    'Unmerge cells': 'Разъединить ячейки',
+    'Cannot change part of merged cell': 'Вы не можете изменять часть комбинированной ячейки.',
+    'Cannot paste row merged cells into the table header': 'Вы не можете вставлять объединенные ячейки в заголовок таблицы.'
+  });
+
+  i18n.setLanguage(['fr', 'fr_FR'], {
+    'Merge cells': 'Fusionner les cellules',
+    'Unmerge cells': 'Séparer les cellules',
+    'Cannot change part of merged cell': 'Impossible de modifier une partie de la cellule fusionnée.',
+    'Cannot paste row merged cells into the table header': 'Impossible de coller les cellules fusionnées dans l\'en-tête du tableau.'
+  });
+
+  i18n.setLanguage(['uk', 'uk_UA'], {
+    'Merge cells': 'Об\'єднати комірки',
+    'Unmerge cells': 'Роз\'єднати комірки',
+    'Cannot change part of merged cell': 'Ви не можете змінювати частину комбінованої комірки.',
+    'Cannot paste row merged cells into the table header': 'Ви не можете вставляти об\'єднані комірки в заголовок таблиці.'
   });
 }
 
@@ -11931,7 +11979,7 @@ function _createRepeatString(str, count) {
 
 /**
  * Make table head align text.
- * Copy from https://github.com/nhnent/toMark/blob/develop/src/renderer.gfm.js
+ * Copy from https://github.com/nhnent/to-mark/blob/develop/src/renderer.gfm.js
  * @param {HTMLElement} thElement - Table head cell element
  * @returns {string}
  * @private
@@ -14429,21 +14477,30 @@ function colorSyntaxExtension(editor) {
  * @ignore
  */
 function initUI(editor, preset) {
+  var name = 'colorSyntax';
   var className = 'tui-color';
   var i18n = editor.i18n;
+  var toolbar = editor.getUI().getToolbar();
 
   editor.eventManager.addEventType('colorButtonClicked');
 
-  editor.getUI().toolbar.addButton({
-    className: className,
-    event: 'colorButtonClicked',
-    tooltip: i18n.get('Text color')
-  }, 4);
-  var $button = editor.getUI().toolbar.$el.find('button.' + className);
+  toolbar.insertItem(3, {
+    type: 'button',
+    options: {
+      name: name,
+      className: className,
+      event: 'colorButtonClicked',
+      tooltip: i18n.get('Text color')
+    }
+  });
+  var colorSyntaxButtonIndex = toolbar.indexOfItem(name);
+
+  var _toolbar$getItem = toolbar.getItem(colorSyntaxButtonIndex),
+      $button = _toolbar$getItem.$el;
 
   var $colorPickerContainer = (0, _jquery2.default)('<div />');
 
-  var $buttonBar = (0, _jquery2.default)('<button type="button" class="te-apply-button">입력</button>');
+  var $buttonBar = (0, _jquery2.default)('<button type="button" class="te-apply-button">' + i18n.get('OK') + '</button>');
 
   var cpOptions = {
     container: $colorPickerContainer[0]
@@ -14467,7 +14524,7 @@ function initUI(editor, preset) {
     $target: editor.getUI().$el,
     css: {
       'width': 'auto',
-      'position': 'absolute'
+      'position': 'fixed'
     }
   });
 
@@ -14480,10 +14537,10 @@ function initUI(editor, preset) {
     if (popup.isShow()) {
       popup.hide();
     } else {
-      var position = $button.position();
+      var offset = $button.offset();
       popup.$el.css({
-        top: position.top + $button.outerHeight(true),
-        left: position.left
+        top: offset.top + $button.outerHeight(),
+        left: offset.left
       });
       popup.show();
       colorPicker.slider.toggle(true);
@@ -14630,7 +14687,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var codeBlockManager = _editorProxy2.default.codeBlockManager;
 
 var DEFAULT_RENDERER_URL = 'http://www.plantuml.com/plantuml/png/';
-var LANG = 'uml';
+var UML_LANGUAGES = ['uml', 'plantuml'];
 
 /**
  * plant uml plugin
@@ -14665,11 +14722,14 @@ function umlExtension(editor) {
     return renderedHTML;
   }
 
-  var optionLanguages = editor.options.codeBlockLanguages;
-  if (optionLanguages && optionLanguages.indexOf(LANG) < 0) {
-    optionLanguages.push(LANG);
-  }
-  codeBlockManager.setReplacer(LANG, plantUMLReplacer);
+  var codeBlockLanguages = editor.options.codeBlockLanguages;
+
+  UML_LANGUAGES.forEach(function (umlLanguage) {
+    if (codeBlockLanguages.indexOf(umlLanguage) < 0) {
+      codeBlockLanguages.push(umlLanguage);
+    }
+    codeBlockManager.setReplacer(umlLanguage, plantUMLReplacer);
+  });
 }
 
 _editorProxy2.default.defineExtension('uml', umlExtension);
